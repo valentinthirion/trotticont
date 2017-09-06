@@ -11,6 +11,8 @@
     """,
     'data': [
         'views/menu_buttons.xml',
+        'views/race_view.xml',
+        'views/team_view.xml',
     ],
     'application': True
 }
