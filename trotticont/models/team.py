@@ -11,5 +11,5 @@ class Team(models.Model):
     name = fields.Char(string='Name', copy=False, index=True, required=True)
     race_id = fields.Many2one('trotticont.race', string='Race', required=True)
     team_number = fields.Integer(string="Number")
-    category_id = fields.Many2one('trotticont.race_category', string="Category")
-    group_id = fields.Many2one('trotticont.race_group', string="Group")
+    category_id = fields.Many2one('trotticont.team_category', string='Category')
+    group_id = fields.Many2one('trotticont.team_group', string='Group')    

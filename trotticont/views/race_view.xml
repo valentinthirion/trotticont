@@ -38,10 +38,14 @@
                         </group>
                         <group>
                             <field name="team_ids">
-                                <field name="team_number" />
-                                <field name="name" />
-                                <field name="category_id" />
+                                <tree>
+                                    <field name="team_number" />
+                                    <field name="name" />
+                                    <field name="category_id" />
+                                    <field name="group_id" />
+                                </tree>
                             </field>
+                            <field name="team_count" />
                         </group>
                     </sheet>
                 </form>

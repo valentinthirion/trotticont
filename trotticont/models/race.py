@@ -31,8 +31,12 @@ class Race(models.Model):
     image_small = fields.Binary("Small-sized photo", attachment=True)
     time_start = fields.Datetime(string='Race start', required=True, readonly=True)
     time_end = fields.Datetime(string='Race end', required=True, readonly=True)
-
     team_ids = fields.One2many('trotticont.team', 'race_id', string='Teams')
+    team_count = fields.Integer(string="Teams count", compute='_compute_team_count')
+
+    @api.one
+    def _compute_team_count(self):
+        self.team_count = len(self.team_ids)
 
     @api.model
     def create(self, vals):
