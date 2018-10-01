@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- App Menu -->
+        <menuitem name="Racy"
+            id="menu_racy"
+            sequence="5" action="" web_icon="racy,static/description/menu.png" />
+        
+        <!-- Races -->
+        <record id="action_races" model="ir.actions.act_window">
+            <field name="name">Races</field>
+            <field name="res_model">racy.race</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Races" id="menu_races" sequence="5" action="action_races" parent="menu_racy"/>
+
+        <!-- Teams -->
+        <record id="action_teams" model="ir.actions.act_window">
+            <field name="name">Teams</field>
+            <field name="res_model">racy.team</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Teams" id="menu_teams" sequence="10" action="action_teams" parent="menu_racy"/>
+
+        <!-- Categories -->
+        <record id="action_categories" model="ir.actions.act_window">
+            <field name="name">Categories</field>
+            <field name="res_model">racy.category</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Team categories" id="menu_categories" sequence="5" action="action_categories" parent="menu_racy"/>
+
+        <!-- Groups -->
+        <record id="action_groups" model="ir.actions.act_window">
+            <field name="name">Groups</field>
+            <field name="res_model">racy.group</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Team groups" id="menu_groups" sequence="5" action="action_groups" parent="menu_racy"/>
+
+        <!-- Racers -->
+        <record id="action_racers" model="ir.actions.act_window">
+            <field name="name">Racers</field>
+            <field name="res_model">racy.racer</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Racers" id="menu_racers" sequence="5" action="action_racers" parent="menu_racy"/>
+
+        <!-- Routes -->
+        <record id="action_routes" model="ir.actions.act_window">
+            <field name="name">Routes</field>
+            <field name="res_model">racy.route</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Routes" id="menu_routes" sequence="5" action="action_routes" parent="menu_racy"/>
+
+        
+        
+    </data>
+</openerp>

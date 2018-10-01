@@ -6,10 +6,10 @@ import logging
 _logger = logging.getLogger(__name__)
 
 class Team(models.Model):
-    _name = 'trotticont.team'
+    _name = 'racy.team'
 
     name = fields.Char(string='Name', copy=False, index=True, required=True)
-    race_id = fields.Many2one('trotticont.race', string='Race', required=True)
+    race_id = fields.Many2one('racy.race', string='Race', required=True)
     team_number = fields.Integer(string="Number")
-    category_id = fields.Many2one('trotticont.team_category', string='Category')
-    group_id = fields.Many2one('trotticont.team_group', string='Group')    
+    category_id = fields.Many2one('racy.team_category', string='Category')
+    group_id = fields.Many2one('racy.team_group', string='Group')    
