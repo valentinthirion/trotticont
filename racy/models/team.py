@@ -12,4 +12,5 @@ class Team(models.Model):
     race_id = fields.Many2one('racy.race', string='Race', required=True)
     team_number = fields.Integer(string="Number")
     category_id = fields.Many2one('racy.team_category', string='Category')
-    group_id = fields.Many2one('racy.team_group', string='Group')    
+    group_id = fields.Many2one('racy.team_group', string='Group')
+    lap_ids = fields.One2many('racy.lap', 'team_id', string="Laps")

@@ -53,7 +53,7 @@
                                 </field>
                                 <field name="route_count" />
                             </page>
-                            <page name="teams" string="Teams">
+                            <page name="teams" string="Teams" attrs="{'invisible':[('racing_mode', '!=', 'team')]}">
                                 <field name="team_ids">
                                     <tree>
                                         <field name="team_number" />
@@ -64,20 +64,31 @@
                                 </field>
                                 <field name="team_count" />
                             </page>
-                            <page name="categories" string="Categories">
+                            <page name="racers" string="Racers" attrs="{'invisible':[('racing_mode', '!=', 'single')]}">
+                                <field name="racer_ids">
+                                    <tree>
+                                        <field name="number" />
+                                        <field name="name" />
+                                        <field name="partner_id" />
+                                        <field name="category_id" />
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="categories" string="Categories" attrs="{'invisible':[('group_mode', '!=', 'category')]}">
                                 <field name="category_ids">
                                     <tree>
                                         <field name="name" />
                                     </tree>
                                 </field>
                             </page>
-                            <page name="groups" string="Groups">
+                            <page name="groups" string="Groups" attrs="{'invisible':[('group_mode', '!=', 'superteam')]}">
                                 <field name="group_ids">
                                     <tree>
                                         <field name="name" />
                                     </tree>
                                 </field>
                             </page>
+                            
                         </notebook>
                     </sheet>
                 </form>

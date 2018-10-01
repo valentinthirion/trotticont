@@ -66,6 +66,16 @@
 
         <menuitem name="Routes" id="menu_routes" sequence="5" action="action_routes" parent="menu_racy"/>
 
+        <!-- Laps -->
+        <record id="action_laps" model="ir.actions.act_window">
+            <field name="name">Laps</field>
+            <field name="res_model">racy.lap</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Laps" id="menu_laps" sequence="5" action="action_laps" parent="menu_racy"/>
+
         
         
     </data>

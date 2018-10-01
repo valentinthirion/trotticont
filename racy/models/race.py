@@ -38,6 +38,8 @@ class Race(models.Model):
     category_ids = fields.One2many('racy.category', 'race_id', string="Categories of teams")
     group_ids = fields.One2many('racy.group', 'race_id', string="Groups of teams")
 
+    lap_ids = fields.One2many('racy.lap', 'race_id', string="Laps")
+
     @api.one
     def _compute_route_count(self):
         self.route_count = len(self.route_ids)
