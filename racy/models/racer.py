@@ -14,3 +14,4 @@ class Racer(models.Model):
     category_id = fields.Many2one('racy.team_category', string='Category')
     partner_id = fields.Many2one('res.partner', string="Contact")
     lap_ids = fields.One2many('racy.lap', 'racer_id', string="Laps")
+    route_id = fields.Many2one('racy.route', string="Route", required=True)

@@ -14,3 +14,4 @@ class Team(models.Model):
     category_id = fields.Many2one('racy.team_category', string='Category')
     group_id = fields.Many2one('racy.team_group', string='Group')
     lap_ids = fields.One2many('racy.lap', 'team_id', string="Laps")
+    route_id = fields.Many2one('racy.route', string="Route", required=True)
