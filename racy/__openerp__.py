@@ -18,6 +18,7 @@
         'views/route_view.xml',
         'views/group_view.xml',
         'views/category_view.xml',
+        'views/lap_view.xml',
     ],
     'application': True
 }

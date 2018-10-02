@@ -12,3 +12,10 @@ class Lap(models.Model):
     racer_id = fields.Many2one('racy.racer', string='Racer')
     team_id = fields.Many2one('racy.team', string='Team')
     route_id = fields.Many2one('racy.route', string='Route', required=True)
+
+    @api.one
+    def name_get(self):
+        if self.racer_id:
+            return (self.id, self.racer_id.name + ' - ' + self.race_id.name + ' - ' + self.route_id.name + ' [' + self.create_date + ']')
+        if self.team_id:
+            return (self.id, self.team_id.name + ' - ' + self.race_id.name + ' - ' + self.route_id.name + ' [' + self.create_date + ']')

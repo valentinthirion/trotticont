@@ -75,8 +75,6 @@
         </record>
 
         <menuitem name="Laps" id="menu_laps" sequence="5" action="action_laps" parent="menu_racy"/>
-
-        
         
     </data>
 </openerp>

@@ -13,7 +13,7 @@ class Team(models.Model):
     def _get_default_route(self):
         if self.race_id:
             if len(self.race_id.route_ids) == 1:
-                return self.race_id.route_ids[0]
+                return self.race_id.route_ids[0].id
 
     name = fields.Char(string='Name', copy=False, index=True, required=True)
     race_id = fields.Many2one('racy.race', string='Race', required=True)
