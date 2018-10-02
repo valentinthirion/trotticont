@@ -20,5 +20,5 @@ class Racer(models.Model):
 
     @api.one
     def _compute_lap_count(self):
-        self.lap_count = self.env['racy.lap'].search([('racer_id', '=', self.id), ('race_id', '=', self.race_id.id)])
+        self.lap_count = len(self.env['racy.lap'].search([('racer_id', '=', self.id), ('race_id', '=', self.race_id.id)]))
 
