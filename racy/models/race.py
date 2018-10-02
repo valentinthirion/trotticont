@@ -16,6 +16,7 @@ class Race(models.Model):
     state = fields.Selection([
         ('draft', 'Draft'),
         ('confirmed', 'Confirmed'),
+        ('started', 'Started'),
         ('ended', 'Ended'),
         ('cancel', 'Cancelled')
     ], string='State', default='draft', required=True)
@@ -39,6 +40,7 @@ class Race(models.Model):
     group_ids = fields.One2many('racy.group', 'race_id', string="Groups of teams")
 
     lap_ids = fields.One2many('racy.lap', 'race_id', string="Laps")
+    lap_count = fields.Integer(string="Laps count", compute='_compute_lap_count')
 
     @api.one
     def _compute_route_count(self):
@@ -51,6 +53,10 @@ class Race(models.Model):
     @api.one
     def _compute_racer_count(self):
         self.racer_count = len(self.racer_ids)
+
+    @api.one
+    def _compute_lap_count(self):
+        self.lap_count = len(self.lap_ids)
 
     @api.model
     def create(self, vals):

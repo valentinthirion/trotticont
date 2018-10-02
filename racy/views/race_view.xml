@@ -15,15 +15,37 @@
             </field>
         </record>
 
+        <record id="act_race_laps" model="ir.actions.act_window">
+            <field name="name">Laps</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">racy.lap</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="context">{'default_race_id': active_id}</field>
+            <field name="domain">[('race_id', '=', active_id)]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Click to add a new lap</p>
+            </field>
+        </record>
+
         <record id="view_race_form" model="ir.ui.view">
             <field name="name">view_race_form</field>
             <field name="model">racy.race</field>
             <field name="arch" type="xml">
                 <form string="Race">
                     <header>
-                        <field name="state" widget="statusbar" statusbar_visible="draft,submitted,approved" statusbar_colors="{'submitted': 'blue','refused':'red'}" />
+                        <field name="state" widget="statusbar" clickable="True" />
                     </header>
                     <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="%(racy.act_race_laps)d"
+                                    class="oe_stat_button"
+                                    type="action"
+                                    icon="fa-tasks"
+                                    attrs="{'invisible': [('lap_count', '=', 0)]}">
+                                <field name="lap_count" widget="statinfo" string="Lap(s)"/>
+                            </button>
+                        </div>
                         <group>
                             <group>
                                 <field name="name" />
@@ -49,6 +71,10 @@
                                         <field name="d_plus" />
                                         <field name="start_date" />
                                         <field name="end_date" />
+                                        <field name="racer_count" />
+                                        <field name="team_count" />
+                                        <field name="start_date_real" />
+                                        <button name="init_route" type="object" string="Initiate" class="oe_highlight"/>
                                     </tree>
                                 </field>
                                 <field name="route_count" />
