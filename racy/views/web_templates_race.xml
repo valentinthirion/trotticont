@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <template id="racy_race_count_page" name="Example page" page="True">
+            <t t-call="website.layout">
+                <div class="oe_structure">
+                    <div class="container">
+                        <h2>Racy !</h2>
+                        <h3><span t-field="race.name" /></h3>
+
+                        <form name="pass_form">
+                            <input name="race_id" t-value="race.id" type="hidden" />
+                            <input name="number" type="text" placeholder="Type a number" />
+                            <input type="submit" value="Pass" />
+                        </form>
+                        <table>
+                            <tr>
+                                <th>#</th>
+                                <t t-if="race.racing_mode=='single'">
+                                    <th>Racer</th>
+                                </t>
+                                <t t-if="race.racing_mode=='team'">
+                                    <th>Team</th>
+                                </t>
+                            </tr>
+                            <!-- Display racers -->
+                            <t t-if="race.racing_mode=='single'">
+                                <t t-foreach="race.racer_ids" t-as="racer">
+                                    <tr>
+                                        <td><span t-field="racer.number" /></td>
+                                        <td><span t-field="racer.name" /></td>
+                                    </tr>
+                                </t>
+                            </t>
+                            <!-- Display teams -->
+                            <t t-if="race.racing_mode=='team'">
+                                <t t-foreach="race.team_ids" t-as="team">
+                                    <tr>
+                                        <td><span t-field="team.team_number" /></td>
+                                        <td><span t-field="team.name" /></td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </table>
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</openerp>

@@ -2,6 +2,7 @@
     'name': "Racy in Odoo",
     'version': '9.0.1.0.0',
     'depends': [
+        'website',
     ],
     'author': "Valentin Thirion, valentin@medineo.be",
     'website': "http://www.medineo.be",
@@ -19,6 +20,8 @@
         'views/group_view.xml',
         'views/category_view.xml',
         'views/lap_view.xml',
+
+        'views/web_templates_race.xml',
     ],
     'application': True
 }

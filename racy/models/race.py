@@ -8,6 +8,7 @@ _logger = logging.getLogger(__name__)
 
 class Race(models.Model):
     _name = 'racy.race'
+    _inherit = ['website.seo.metadata', 'website.published.mixin']
     _order = 'date desc'
 
     name = fields.Char(string='Name', copy=False, index=True, required=True)
@@ -67,3 +68,10 @@ class Race(models.Model):
     def write(self, vals):
         tools.image_resize_images(vals)
         return super(Race, self).write(vals)
+
+    @api.multi
+    def _compute_website_url(self):
+        super(Race, self)._compute_website_url()
+        for race in self:
+            _logger.debug("\n\n RACE : %s", race.name)
+            race.website_url = "/racy/race/%s" % (race.id,)

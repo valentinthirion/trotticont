@@ -88,11 +88,12 @@
                                     context="{'default_race_id': active_id}">
                                 <field name="racer_count" widget="statinfo" string="Team(s)"/>
                             </button>
-                            <!--<field name="website_url" invisible="1"/>-->
-                            <button class="oe_stat_button" name="open_start_page" type="object" icon="fa-globe" string="Open count page" />
+                            
+                            <button class="oe_stat_button" name="website_publish_button" type="object" icon="fa-globe" string="Open count page" />
                         </div>
                         <group>
                             <group>
+                                <field name="website_url" invisible="0"/>
                                 <field name="name" />
                                 <field name="date" />
                             </group>
