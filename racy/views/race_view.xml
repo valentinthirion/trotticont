@@ -15,6 +15,32 @@
             </field>
         </record>
 
+        <record id="act_race_teams" model="ir.actions.act_window">
+            <field name="name">Teams</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">racy.team</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="context">{'default_race_id': active_id}</field>
+            <field name="domain">[('race_id', '=', active_id)]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Click to add a new team</p>
+            </field>
+        </record>
+
+        <record id="act_race_racers" model="ir.actions.act_window">
+            <field name="name">Racers</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">racy.racer</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="context">{'default_race_id': active_id}</field>
+            <field name="domain">[('race_id', '=', active_id)]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Click to add a new racer</p>
+            </field>
+        </record>
+
         <record id="act_race_laps" model="ir.actions.act_window">
             <field name="name">Laps</field>
             <field name="type">ir.actions.act_window</field>
@@ -42,9 +68,28 @@
                                     class="oe_stat_button"
                                     type="action"
                                     icon="fa-tasks"
-                                    attrs="{'invisible': [('lap_count', '=', 0)]}">
+                                    attrs="{'invisible': [('lap_count', '=', 0)]}"
+                                    context="{'default_race_id': active_id}">
                                 <field name="lap_count" widget="statinfo" string="Lap(s)"/>
                             </button>
+                            <button name="%(racy.act_race_teams)d"
+                                    class="oe_stat_button"
+                                    type="action"
+                                    icon="fa-users"
+                                    attrs="{'invisible': [('racing_mode', '!=', 'team')]}"
+                                    context="{'default_race_id': active_id}">
+                                <field name="team_count" widget="statinfo" string="Team(s)"/>
+                            </button>
+                            <button name="%(racy.act_race_racers)d"
+                                    class="oe_stat_button"
+                                    type="action"
+                                    icon="fa-users"
+                                    attrs="{'invisible': [('racing_mode', '!=', 'single')]}"
+                                    context="{'default_race_id': active_id}">
+                                <field name="racer_count" widget="statinfo" string="Team(s)"/>
+                            </button>
+                            <!--<field name="website_url" invisible="1"/>-->
+                            <button class="oe_stat_button" name="open_start_page" type="object" icon="fa-globe" string="Open count page" />
                         </div>
                         <group>
                             <group>
@@ -56,11 +101,13 @@
                             </group>
                         </group>
                         <group>
-                            <field name="description" />
-                        </group>
-                        <group name="race_settings">
-                            <field name="racing_mode" />
-                            <field name="group_mode" />
+                            <group>
+                                <field name="description" />
+                            </group>
+                            <group name="race_settings">
+                                <field name="racing_mode" />
+                                <field name="group_mode" />
+                            </group>
                         </group>
                         <notebook>
                             <page name="routes" string="Routes">
@@ -75,29 +122,6 @@
                                         <field name="team_count" />
                                         <field name="start_date_real" />
                                         <button name="init_route" type="object" string="Initiate" class="oe_highlight"/>
-                                    </tree>
-                                </field>
-                                <field name="route_count" />
-                            </page>
-                            <page name="teams" string="Teams" attrs="{'invisible':[('racing_mode', '!=', 'team')]}">
-                                <field name="team_ids" context="{'default_race_id': active_id}">
-                                    <tree>
-                                        <field name="team_number" />
-                                        <field name="name" />
-                                        <field name="route_id" />
-                                        <field name="category_id" />
-                                        <field name="group_id" />
-                                    </tree>
-                                </field>
-                                <field name="team_count" />
-                            </page>
-                            <page name="racers" string="Racers" attrs="{'invisible':[('racing_mode', '!=', 'single')]}">
-                                <field name="racer_ids" context="{'default_race_id': active_id}">
-                                    <tree>
-                                        <field name="number" />
-                                        <field name="name" />
-                                        <field name="partner_id" />
-                                        <field name="route_id" />
                                     </tree>
                                 </field>
                             </page>
@@ -116,7 +140,6 @@
                                     </tree>
                                 </field>
                             </page>
-                            
                         </notebook>
                     </sheet>
                 </form>
