@@ -110,7 +110,7 @@
                             </page>
                             <page name="groups" string="Groups" attrs="{'invisible':[('group_mode', '!=', 'superteam')]}">
                                 <field name="group_ids">
-                                    <tree>
+                                    <tree editable="bottom">
                                         <field name="name" />
                                     </tree>
                                 </field>
