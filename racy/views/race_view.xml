@@ -128,7 +128,7 @@
                             </page>
                             <page name="categories" string="Categories" attrs="{'invisible':[('group_mode', '!=', 'category')]}">
                                 <field name="category_ids" context="{'default_race_id': active_id}">
-                                    <tree>
+                                    <tree editable="bottom">
                                         <field name="name" />
                                     </tree>
                                 </field>
