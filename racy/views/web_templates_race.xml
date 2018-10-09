@@ -5,44 +5,115 @@
             <t t-call="website.layout">
                 <div class="oe_structure">
                     <div class="container">
+                        <script type="text/javascript">
+                            odoo.define('racy.race_number_pass', ['web.ajax'], function (require) {
+                            "use strict";
+                            $('.passing_panel').on('click', '.js_attendee_passed', function(e) {
+                                console.log('hello world');
+                                e.preventDefault();
+                                var $link = $(e.currentTarget);
+                                var $input = $link.parent().find("input");
+                                var racer_id = parseInt($input.data('race-id'),10);;
+                                var number_passed = $input.val();
+                                var ajax = require('web.ajax');
+                                var clickwatch = (function(){
+                                      var timer = 0;
+                                      return function(callback, ms){
+                                        clearTimeout(timer);
+                                        timer = setTimeout(callback, ms);
+                                      };
+                                })();
+                                $input.data('update_change', true);
+                                clickwatch(function(){
+                                    ajax.jsonRpc("/racy/number_passed/validate_json", 'call', {
+                                        'racer_id': racer_id,
+                                        'number': number_passed
+                                    }).then(function (data) {
+                                        $input.data('update_change', false);
+                                        var check_mark = document.getElementById('attendee_passed_check_mark');
+                                        if(data){
+                                            if('racing_mode' in data) {
+                                                if(data['racing_mode'] == 'single'){
+                                                    if(data['racer_passed_id'] == -1){
+                                                        check_mark.innerText = ("(This racer number does not exist!)");
+                                                    }
+                                                    else {
+                                                        check_mark.innerText = ("(Racer passed)");
+                                                         /*#" + data['racer_passed_number'] + " - " + data['racer_passed_name'] + " just passed");*/
+                                                    }
+                                                }
+                                                if(data['racing_mode'] == 'team'){
+                                                    if(data['team_passed_id'] == -1){
+                                                        check_mark.innerText = ("(This team number does not exist!)");
+                                                    }
+                                                    else {
+                                                        check_mark.innerText = ("(Team passed)");
+                                                         /*#" + data['racer_passed_number'] + " - " + data['racer_passed_name'] + " just passed");*/
+                                                    }
+                                                }
+                                            } else {
+                                                check_mark.innerText = ("(Validation issue !)");
+                                            }
+                                        } else {
+                                            check_mark.innerText = ("");
+                                        }
+                                    });
+                                }, 500);
+                                return false;
+                            });
+                        });
+
+                        </script>
+
                         <h2>Racy !</h2>
                         <h3><span t-field="race.name" /></h3>
 
-                        <form name="pass_form">
-                            <input name="race_id" t-value="race.id" type="hidden" />
-                            <input name="number" type="text" placeholder="Type a number" />
-                            <input type="submit" value="Pass" />
-                        </form>
-                        <table>
-                            <tr>
-                                <th>#</th>
+                        <div class="col-md-6 passing_panel">
+                            <input type="text"
+                                   t-attf-name="number"
+                                   t-attf-data-race-id="#{race.id}"
+                                   t-attf-placeholder="Type a number"
+                            />
+                            <a t-attf-href="#"
+                                class="mb8 input-group-addon float_left js_attendee_passed"
+                                id="passButton"
+                                data-no-instant="">
+                            PASS
+                            </a>
+                            <span id="attendee_passed_check_mark" style="color: red;" value="" />
+                        </div>
+                        <div class="col-md-12">
+                            <table>
+                                <tr>
+                                    <th>#</th>
+                                    <t t-if="race.racing_mode=='single'">
+                                        <th>Racer</th>
+                                    </t>
+                                    <t t-if="race.racing_mode=='team'">
+                                        <th>Team</th>
+                                    </t>
+                                </tr>
+                                <!-- Display racers -->
                                 <t t-if="race.racing_mode=='single'">
-                                    <th>Racer</th>
+                                    <t t-foreach="race.racer_ids" t-as="racer">
+                                        <tr>
+                                            <td><span t-field="racer.number" /></td>
+                                            <td><span t-field="racer.name" /></td>
+                                        </tr>
+                                    </t>
                                 </t>
+                                <!-- Display teams -->
                                 <t t-if="race.racing_mode=='team'">
-                                    <th>Team</th>
+                                    <t t-foreach="race.team_ids" t-as="team">
+                                        <tr>
+                                            <td><span t-field="team.team_number" /></td>
+                                            <td><span t-field="team.name" /></td>
+                                            <td><span t-field="team.lap_count" /></td>
+                                        </tr>
+                                    </t>
                                 </t>
-                            </tr>
-                            <!-- Display racers -->
-                            <t t-if="race.racing_mode=='single'">
-                                <t t-foreach="race.racer_ids" t-as="racer">
-                                    <tr>
-                                        <td><span t-field="racer.number" /></td>
-                                        <td><span t-field="racer.name" /></td>
-                                    </tr>
-                                </t>
-                            </t>
-                            <!-- Display teams -->
-                            <t t-if="race.racing_mode=='team'">
-                                <t t-foreach="race.team_ids" t-as="team">
-                                    <tr>
-                                        <td><span t-field="team.team_number" /></td>
-                                        <td><span t-field="team.name" /></td>
-                                        <td><span t-field="team.lap_count" /></td>
-                                    </tr>
-                                </t>
-                            </t>
-                        </table>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </t>
