@@ -38,6 +38,7 @@
                                     <tr>
                                         <td><span t-field="team.team_number" /></td>
                                         <td><span t-field="team.name" /></td>
+                                        <td><span t-field="team.lap_count" /></td>
                                     </tr>
                                 </t>
                             </t>
