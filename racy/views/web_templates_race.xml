@@ -5,15 +5,33 @@
             <t t-call="website.layout">
                 <div class="oe_structure">
                     <div class="container">
-                        <script type="text/javascript">
-                            odoo.define('racy.race_number_pass', ['web.ajax'], function (require) {
+
+
+                        <h2>Racy !</h2>
+                        <h3><span t-field="race.name" /></h3>
+
+                        <div class="col-md-6 passing_panel">
+                            <input type="text"
+                                   t-attf-name="number"
+                                   t-attf-data-race-id="#{race.id}"
+                                   t-attf-placeholder="Type a number"
+                            />
+                            <a t-attf-href="#"
+                                class="mb8 input-group-addon float_left js_attendee_passed"
+                                id="passButton"
+                                data-no-instant="">
+                            PASS
+                            </a>
+                            <span id="attendee_passed_check_mark" style="color: red;" value="" />
+                        </div>
+                        <script>
+                            odoo.define('racy.number_passed', ['web.ajax'], function (require) {
                             "use strict";
                             $('.passing_panel').on('click', '.js_attendee_passed', function(e) {
-                                console.log('hello world');
                                 e.preventDefault();
                                 var $link = $(e.currentTarget);
                                 var $input = $link.parent().find("input");
-                                var racer_id = parseInt($input.data('race-id'),10);;
+                                var race_id = parseInt($input.data('race-id'),10);;
                                 var number_passed = $input.val();
                                 var ajax = require('web.ajax');
                                 var clickwatch = (function(){
@@ -26,7 +44,7 @@
                                 $input.data('update_change', true);
                                 clickwatch(function(){
                                     ajax.jsonRpc("/racy/number_passed/validate_json", 'call', {
-                                        'racer_id': racer_id,
+                                        'race_id': race_id,
                                         'number': number_passed
                                     }).then(function (data) {
                                         $input.data('update_change', false);
@@ -64,24 +82,6 @@
                         });
 
                         </script>
-
-                        <h2>Racy !</h2>
-                        <h3><span t-field="race.name" /></h3>
-
-                        <div class="col-md-6 passing_panel">
-                            <input type="text"
-                                   t-attf-name="number"
-                                   t-attf-data-race-id="#{race.id}"
-                                   t-attf-placeholder="Type a number"
-                            />
-                            <a t-attf-href="#"
-                                class="mb8 input-group-addon float_left js_attendee_passed"
-                                id="passButton"
-                                data-no-instant="">
-                            PASS
-                            </a>
-                            <span id="attendee_passed_check_mark" style="color: red;" value="" />
-                        </div>
                         <div class="col-md-12">
                             <table>
                                 <tr>

@@ -24,10 +24,10 @@ class RacyCountPage(http.Controller):
         _logger.debug("\n\n HELLO WORLD !\n\n")
         # Test if team or racer
         if race_id and number:
-            race = request.env['racy.race'].sudo().search([('id', '=', race_id.id)], limit=1)
+            race = request.env['racy.race'].sudo().search([('id', '=', race_id)], limit=1)
             if race.racing_mode == 'single':
                 racer = request.env['racy.racer'].sudo().search([
-                    ('race_id', '=', race_id.id),
+                    ('race_id', '=', race_id),
                     ('number', '=', int(number)),
                     ], limit=1)
                 if not racer or len(racer) != 1:
@@ -36,6 +36,8 @@ class RacyCountPage(http.Controller):
                         'racer_passed_id': -1
                     }
                 else:
+                    # Add one lap to this racer here + compute its avg speed and position
+                    # Then return to the view
                     return {
                         'racing_mode': 'single',
                         'racer_passed_id': racer.id,
@@ -44,8 +46,8 @@ class RacyCountPage(http.Controller):
                     }
             elif race.racing_mode == 'team':
                 team = request.env['racy.team'].sudo().search([
-                    ('race_id', '=', race_id.id),
-                    ('number', '=', int(number)),
+                    ('race_id', '=', race_id),
+                    ('team_number', '=', int(number)),
                     ], limit=1)
                 if not team or len(team) != 1:
                     return {
@@ -53,10 +55,12 @@ class RacyCountPage(http.Controller):
                         'team_passed_id': -1
                     }
                 else:
+                    # Add one lap to this team here + compute its avg speed and position
+                    # Then return to the view
                     return {
                         'racing_mode': 'team',
                         'team_passed_id': team.id,
-                        'team_passed_number': team.number,
+                        'team_passed_number': team.team_number,
                         'team_passed_name': team.name,
                         'team_passed_lap_count': team.lap_count}
 
