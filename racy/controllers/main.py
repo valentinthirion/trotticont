@@ -61,11 +61,7 @@ class RacyCountPage(http.Controller):
                     }
                 else:
                     # Add one lap to this team here + compute its avg speed and position
-                    new_lap = request.env['racy.lap'].create({
-                        'race_id': race_id,
-                        'team_id': team.id,
-                        'route_id': team.route_id.id,
-                    })
+                    team.addLap()
                     # Then return to the view
                     return {
                         'racing_mode': 'team',

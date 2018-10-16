@@ -8,6 +8,7 @@
                 <tree string="Teams">
                     <field name="team_number" />
                     <field name="name" />
+                    <field name="avg_speed" />
                     <field name="race_id" />
                     <field name="category_id" />
                     <field name="group_id" />

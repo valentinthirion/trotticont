@@ -117,6 +117,7 @@
                                             <td><span t-field="team.team_number" /></td>
                                             <td><span t-field="team.name" /></td>
                                             <td><span t-field="team.lap_count" /></td>
+                                            <td><span t-field="team.avg_speed" /></td>
                                         </tr>
                                     </t>
                                 </t>
