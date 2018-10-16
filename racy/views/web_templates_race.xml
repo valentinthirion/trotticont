@@ -18,6 +18,7 @@
                                    t-attf-placeholder="Type a number"
                                    id="passNumber"
                                    autocomplete="off"
+                                   autofocus="autofocus"
                             />
                             <a t-attf-href="#"
                                 class="mb8 input-group-addon float_left js_attendee_passed"
