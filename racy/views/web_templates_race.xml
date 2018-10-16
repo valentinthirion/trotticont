@@ -56,8 +56,7 @@
                                                         check_mark.innerText = ("(This racer number does not exist!)");
                                                     }
                                                     else {
-                                                        check_mark.innerText = ("(Racer passed)");
-                                                         /*#" + data['racer_passed_number'] + " - " + data['racer_passed_name'] + " just passed");*/
+                                                        check_mark.innerText = ("Racer: " + data['racer_passed_number'] + " - " + data['racer_passed_name'] + " just passed");
                                                     }
                                                 }
                                                 if(data['racing_mode'] == 'team'){
@@ -65,8 +64,7 @@
                                                         check_mark.innerText = ("(This team number does not exist!)");
                                                     }
                                                     else {
-                                                        check_mark.innerText = ("(Team passed)");
-                                                         /*#" + data['racer_passed_number'] + " - " + data['racer_passed_name'] + " just passed");*/
+                                                        check_mark.innerText = ("Team passed: " + data['team_passed_number'] + " - " + data['team_passed_name'] + " just passed");
                                                     }
                                                 }
                                             } else {
