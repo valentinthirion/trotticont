@@ -17,6 +17,7 @@
                                    t-attf-data-race-id="#{race.id}"
                                    t-attf-placeholder="Type a number"
                                    id="passNumber"
+                                   autocomplete="off"
                             />
                             <a t-attf-href="#"
                                 class="mb8 input-group-addon float_left js_attendee_passed"
@@ -56,6 +57,8 @@
                                         }).then(function (data) {
                                             $input.data('update_change', false);
                                             var check_mark = document.getElementById('attendee_passed_check_mark');
+                                            // reset input value
+                                            document.getElementById('passNumber').value = "";
                                             if(data){
                                                 if('racing_mode' in data) {
                                                     if(data['racing_mode'] == 'single'){
