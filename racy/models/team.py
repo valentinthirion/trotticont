@@ -23,7 +23,7 @@ class Team(models.Model):
     route_id = fields.Many2one('racy.route', string="Route", default=lambda self: self._get_default_route(), required=True)
     group_mode = fields.Selection(related='race_id.group_mode', string="Racing mode")
 
-    lap_ids = fields.One2many('racy.lap', 'race_id', string="Laps")
+    lap_ids = fields.One2many('racy.lap', 'team_id', string="Laps")
     lap_count = fields.Integer(string="Laps count", compute='_compute_lap_count')
 
     @api.one
