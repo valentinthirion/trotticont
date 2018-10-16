@@ -12,9 +12,11 @@
 
                         <div class="col-md-6 passing_panel">
                             <input type="text"
+                                   class="form-control js_attendee_number"
                                    t-attf-name="number"
                                    t-attf-data-race-id="#{race.id}"
                                    t-attf-placeholder="Type a number"
+                                   id="passNumber"
                             />
                             <a t-attf-href="#"
                                 class="mb8 input-group-addon float_left js_attendee_passed"
@@ -25,60 +27,64 @@
                             <span id="attendee_passed_check_mark" style="color: red;" value="" />
                         </div>
                         <script>
+                            $("#passNumber").keyup(function(e) {
+                                if (e.which == 13) {
+                                    $("#passButton").click();
+                                }
+                            });
                             odoo.define('racy.number_passed', ['web.ajax'], function (require) {
-                            "use strict";
-                            $('.passing_panel').on('click', '.js_attendee_passed', function(e) {
-                                e.preventDefault();
-                                var $link = $(e.currentTarget);
-                                var $input = $link.parent().find("input");
-                                var race_id = parseInt($input.data('race-id'),10);;
-                                var number_passed = $input.val();
-                                var ajax = require('web.ajax');
-                                var clickwatch = (function(){
-                                      var timer = 0;
-                                      return function(callback, ms){
-                                        clearTimeout(timer);
-                                        timer = setTimeout(callback, ms);
-                                      };
-                                })();
-                                $input.data('update_change', true);
-                                clickwatch(function(){
-                                    ajax.jsonRpc("/racy/number_passed/validate_json", 'call', {
-                                        'race_id': race_id,
-                                        'number': number_passed
-                                    }).then(function (data) {
-                                        $input.data('update_change', false);
-                                        var check_mark = document.getElementById('attendee_passed_check_mark');
-                                        if(data){
-                                            if('racing_mode' in data) {
-                                                if(data['racing_mode'] == 'single'){
-                                                    if(data['racer_passed_id'] == -1){
-                                                        check_mark.innerText = ("(This racer number does not exist!)");
+                                "use strict";
+                                $('.passing_panel').on('click', '.js_attendee_passed', function(e) {
+                                    e.preventDefault();
+                                    var $link = $(e.currentTarget);
+                                    var $input = $link.parent().find("input");
+                                    var race_id = parseInt($input.data('race-id'),10);;
+                                    var number_passed = $input.val();
+                                    var ajax = require('web.ajax');
+                                    var clickwatch = (function(){
+                                          var timer = 0;
+                                          return function(callback, ms){
+                                            clearTimeout(timer);
+                                            timer = setTimeout(callback, ms);
+                                          };
+                                    })();
+                                    $input.data('update_change', true);
+                                    clickwatch(function(){
+                                        ajax.jsonRpc("/racy/number_passed/validate_json", 'call', {
+                                            'race_id': race_id,
+                                            'number': number_passed
+                                        }).then(function (data) {
+                                            $input.data('update_change', false);
+                                            var check_mark = document.getElementById('attendee_passed_check_mark');
+                                            if(data){
+                                                if('racing_mode' in data) {
+                                                    if(data['racing_mode'] == 'single'){
+                                                        if(data['racer_passed_id'] == -1){
+                                                            check_mark.innerText = ("(This racer number does not exist!)");
+                                                        }
+                                                        else {
+                                                            check_mark.innerText = ("Racer: " + data['racer_passed_number'] + " - " + data['racer_passed_name'] + " just passed");
+                                                        }
                                                     }
-                                                    else {
-                                                        check_mark.innerText = ("Racer: " + data['racer_passed_number'] + " - " + data['racer_passed_name'] + " just passed");
+                                                    if(data['racing_mode'] == 'team'){
+                                                        if(data['team_passed_id'] == -1){
+                                                            check_mark.innerText = ("(This team number does not exist!)");
+                                                        }
+                                                        else {
+                                                            check_mark.innerText = ("Team passed: " + data['team_passed_number'] + " - " + data['team_passed_name'] + " just passed");
+                                                        }
                                                     }
-                                                }
-                                                if(data['racing_mode'] == 'team'){
-                                                    if(data['team_passed_id'] == -1){
-                                                        check_mark.innerText = ("(This team number does not exist!)");
-                                                    }
-                                                    else {
-                                                        check_mark.innerText = ("Team passed: " + data['team_passed_number'] + " - " + data['team_passed_name'] + " just passed");
-                                                    }
+                                                } else {
+                                                    check_mark.innerText = ("(Validation issue !)");
                                                 }
                                             } else {
-                                                check_mark.innerText = ("(Validation issue !)");
+                                                check_mark.innerText = ("");
                                             }
-                                        } else {
-                                            check_mark.innerText = ("");
-                                        }
-                                    });
-                                }, 500);
-                                return false;
+                                        });
+                                    }, 500);
+                                    return false;
+                                });
                             });
-                        });
-
                         </script>
                         <div class="col-md-12">
                             <table>
